@@ -68,6 +68,29 @@
       },
       "tags": []
     },
+    "api-user": {
+      "root": "libs/api-user",
+      "sourceRoot": "libs/api-user/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/api-user/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/api-user"],
+          "options": {
+            "jestConfig": "libs/api-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "kiki-app": {
       "projectType": "application",
       "root": "apps/kiki-app",
