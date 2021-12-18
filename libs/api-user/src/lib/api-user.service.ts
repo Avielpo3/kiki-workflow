@@ -1,19 +1,34 @@
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { User, UserDocument } from "./schemas/api-user-schema";
-import { CreateUserDto } from "./dto/CreateUserDto";
+import { DboUser, UserDocument } from './schemas/api-user-schema';
+import { CreateUserDto } from './dto/CreateUserDto';
+import { User } from '@kiki-workspace/api-interfaces';
 
 @Injectable()
 export class ApiUserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
-
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const createdUser = new this.userModel(createUserDto);
-    return createdUser.save();
-  }
+  constructor(
+    @InjectModel(DboUser.name) private userModel: Model<UserDocument>
+  ) {}
 
   async findAll(): Promise<User[]> {
-    return this.userModel.find().exec();
+    const userList = await this.userModel.find().exec();
+    const convertedUserArr = userList.map((user) => user.toJSON<User>());
+
+    return convertedUserArr;
+  }
+
+  async findUserByEmail(email: string): Promise<User> {
+    const queryFilter: FilterQuery<UserDocument> = { email };
+    const foundUser = await this.userModel.findOne(queryFilter).exec();
+
+    return foundUser.toJSON<User>();
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const userToCreate = new this.userModel(createUserDto);
+    const createdUser = await userToCreate.save();
+
+    return createdUser.toJSON<User>();
   }
 }

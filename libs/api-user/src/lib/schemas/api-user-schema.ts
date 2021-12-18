@@ -1,16 +1,43 @@
-
+import { User } from '@kiki-workspace/api-interfaces';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type UserDocument = User & Document;
+export type UserDocument = DboUser & Document;
 
-@Schema()
-export class User {
-  @Prop()
-  name: string;
+export const userDboToJson = (doc, ret: UserDocument, options) => {
+  delete ret.password;
+  delete ret.__v;
 
-  @Prop()
-  age: number;
+  if (options) {
+    console.log(options);
+  }
+
+  const user: User = {
+    email: ret.email,
+    id: ret._id,
+  };
+
+  return user;
+};
+
+@Schema({
+  toJSON: {
+    transform: userDboToJson,
+  },
+})
+export class DboUser implements OmittedUser {
+  @Prop({
+    required: true,
+    type: String,
+  })
+  email: string;
+
+  @Prop({
+    required: true,
+    type: String,
+  })
+  password: number;
 }
+export const UserSchema = SchemaFactory.createForClass(DboUser);
 
-export const UserSchema = SchemaFactory.createForClass(User);
+type OmittedUser = Omit<User, 'id'>;

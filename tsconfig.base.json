@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@kiki-workspace/api-auth": ["libs/api-auth/src/index.ts"],
       "@kiki-workspace/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@kiki-workspace/api-user": ["libs/api-user/src/index.ts"],
       "@kiki/header": ["libs/ui/header/src/index.ts"],
