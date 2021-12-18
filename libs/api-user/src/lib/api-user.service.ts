@@ -34,7 +34,7 @@ export class ApiUserService {
 
   async findUserWithPasswordByEmail(email: string): Promise<UserWithPassword> {
     const queryFilter: FilterQuery<UserDocument> = { email };
-    const transform = (doc, ret: UserDocument) => ({ email: ret.email, password: ret.password });
+    const transform = (doc, ret: UserDocument) => ({ id: ret._id, ...ret });
     const foundUser = await this.userModel.findOne(queryFilter).exec();
     
     return foundUser.toJSON<UserWithPassword>({transform});

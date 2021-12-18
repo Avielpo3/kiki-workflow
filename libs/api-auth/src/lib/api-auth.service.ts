@@ -1,4 +1,4 @@
-import { UserWithPassword } from '@kiki-workspace/api-interfaces';
+import { User } from '@kiki-workspace/api-interfaces';
 import { ApiUserService } from '@kiki-workspace/api-user';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -13,21 +13,26 @@ export class ApiAuthService {
   async validateUser(
     email: string,
     password: string
-  ): Promise<UserWithPassword> {
+  ): Promise<User> {
     const user = await this.usersService.findUserWithPasswordByEmail(email);
-    
+
     // TODO: add more logic (locked etc..)
 
     if (user && user.password === password) {
-      console.log(user.email);
-      return user;
+      console.log(`Valid for: ${user.email}`);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { password, ...rest } = user;
+
+      return rest;
     }
 
     return null;
   }
 
-  async login(email: string, password: string) {
-    const payload = { username: email, sub: password };
+  async login(user: User) {
+    const payload = { email: user.email, id: user.id };
+    console.log(user);
+
     return {
       access_token: this.jwtService.sign(payload),
     };

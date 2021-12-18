@@ -10,9 +10,7 @@ export class ApiAuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-    const { email, password } = req.body;
-    
-    return this.authService.login(email, password);
+    return this.authService.login(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
