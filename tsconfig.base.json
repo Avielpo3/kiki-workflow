@@ -16,7 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@kiki-workspace/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@kiki-workspace/api-user": ["libs/api-user/src/index.ts"]
+      "@kiki-workspace/api-user": ["libs/api-user/src/index.ts"],
+      "@kiki/header": ["libs/ui/header/src/index.ts"],
+      "@kiki/ui": ["libs/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
