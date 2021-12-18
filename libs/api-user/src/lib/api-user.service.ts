@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { DboUser, UserDocument } from './schemas/api-user-schema';
 import { CreateUserDto } from './dto/CreateUserDto';
-import { User } from '@kiki-workspace/api-interfaces';
+import { User, UserWithPassword } from '@kiki-workspace/api-interfaces';
 
 @Injectable()
 export class ApiUserService {
@@ -18,11 +18,26 @@ export class ApiUserService {
     return convertedUserArr;
   }
 
+  async findUserById(_id: string): Promise<User> {
+    const queryFilter: FilterQuery<UserDocument> = { _id };
+    const foundUser = await this.userModel.findOne(queryFilter).exec();
+
+    return foundUser.toJSON<User>();
+  }
+
   async findUserByEmail(email: string): Promise<User> {
     const queryFilter: FilterQuery<UserDocument> = { email };
     const foundUser = await this.userModel.findOne(queryFilter).exec();
 
     return foundUser.toJSON<User>();
+  }
+
+  async findUserWithPasswordByEmail(email: string): Promise<UserWithPassword> {
+    const queryFilter: FilterQuery<UserDocument> = { email };
+    const transform = (doc, ret: UserDocument) => ({ email: ret.email, password: ret.password });
+    const foundUser = await this.userModel.findOne(queryFilter).exec();
+    
+    return foundUser.toJSON<UserWithPassword>({transform});
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {

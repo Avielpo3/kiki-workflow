@@ -1,6 +1,7 @@
 import { User } from '@kiki-workspace/api-interfaces';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 export type UserDocument = DboUser & Document;
 
@@ -35,6 +36,7 @@ export class DboUser implements OmittedUser {
   @Prop({
     required: true,
     type: String,
+    pre: async (prop: string) => await bcrypt.hash(prop, 10)
   })
   password: number;
 }
