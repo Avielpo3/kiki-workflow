@@ -20,7 +20,8 @@ const GlobalJwtAuthGuard = {
   useClass: JwtAuthGuard,
 };
 
-@Module({
+
+Module({
   imports: [MongoModule, ApiUserModule, ApiAuthModule],
   controllers: [AppController],
   providers: [AppService, GlobalJwtAuthGuard],
