@@ -8,12 +8,16 @@
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -37,14 +41,20 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/api/**/*.ts"]
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/api"],
+          "outputs": [
+            "coverage/apps/api"
+          ],
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
@@ -60,21 +70,29 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/api-auth/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api-auth/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api-auth"],
+          "outputs": [
+            "coverage/libs/api-auth"
+          ],
           "options": {
             "jestConfig": "libs/api-auth/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
-      "tags": ["api"]
+      "tags": [
+        "api"
+      ]
     },
     "api-interfaces": {
       "root": "libs/api-interfaces",
@@ -83,9 +101,13 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/api-interfaces/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api-interfaces/**/*.ts"
+            ]
           }
         }
       },
@@ -98,14 +120,20 @@
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["libs/api-user/**/*.ts"]
+            "lintFilePatterns": [
+              "libs/api-user/**/*.ts"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/api-user"],
+          "outputs": [
+            "coverage/libs/api-user"
+          ],
           "options": {
             "jestConfig": "libs/api-user/jest.config.js",
             "passWithNoTests": true
@@ -122,7 +150,9 @@
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/kiki-app",
             "index": "apps/kiki-app/src/index.html",
@@ -132,7 +162,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "apps/kiki-app/src/favicon.ico",
-              "apps/kiki-app/src/assets"
+              "apps/kiki-app/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/pspdfkit/dist/pspdfkit-lib/",
+                "output": "./assets/pspdfkit-lib/"
+              }
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
@@ -205,7 +240,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/kiki-app"],
+          "outputs": [
+            "coverage/apps/kiki-app"
+          ],
           "options": {
             "jestConfig": "apps/kiki-app/jest.config.js",
             "passWithNoTests": true
@@ -233,14 +270,68 @@
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
-          "outputs": ["{options.outputFile}"],
+          "outputs": [
+            "{options.outputFile}"
+          ],
           "options": {
-            "lintFilePatterns": ["apps/kiki-app-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/kiki-app-e2e/**/*.{js,ts}"
+            ]
           }
         }
       },
       "tags": [],
-      "implicitDependencies": ["kiki-app"]
+      "implicitDependencies": [
+        "kiki-app"
+      ]
+    },
+    "pdf-editor": {
+      "projectType": "library",
+      "root": "libs/pdf-editor",
+      "sourceRoot": "libs/pdf-editor/src",
+      "prefix": "kiki",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": [
+            "dist/libs/pdf-editor"
+          ],
+          "options": {
+            "project": "libs/pdf-editor/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/pdf-editor/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/pdf-editor/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/pdf-editor"
+          ],
+          "options": {
+            "jestConfig": "libs/pdf-editor/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/pdf-editor/src/**/*.ts",
+              "libs/pdf-editor/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": [
+        "pdf"
+      ]
     },
     "ui": {
       "projectType": "library",
@@ -250,7 +341,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/ui"],
+          "outputs": [
+            "dist/libs/ui"
+          ],
           "options": {
             "project": "libs/ui/ng-package.json"
           },
@@ -266,7 +359,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ui"],
+          "outputs": [
+            "coverage/libs/ui"
+          ],
           "options": {
             "jestConfig": "libs/ui/jest.config.js",
             "passWithNoTests": true
@@ -275,11 +370,16 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/ui/src/**/*.ts", "libs/ui/src/**/*.html"]
+            "lintFilePatterns": [
+              "libs/ui/src/**/*.ts",
+              "libs/ui/src/**/*.html"
+            ]
           }
         }
       },
-      "tags": ["ui"]
+      "tags": [
+        "ui"
+      ]
     },
     "ui-header": {
       "projectType": "library",
@@ -289,7 +389,9 @@
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/ui/header"],
+          "outputs": [
+            "dist/libs/ui/header"
+          ],
           "options": {
             "project": "libs/ui/header/ng-package.json"
           },
@@ -305,7 +407,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/ui/header"],
+          "outputs": [
+            "coverage/libs/ui/header"
+          ],
           "options": {
             "jestConfig": "libs/ui/header/jest.config.js",
             "passWithNoTests": true
@@ -321,7 +425,9 @@
           }
         }
       },
-      "tags": ["ui"]
+      "tags": [
+        "ui"
+      ]
     }
   },
   "npmScope": "kiki-workspace",
@@ -339,7 +445,12 @@
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
         "accessToken": "YmM2ZDMwNDYtOGJiNC00MDhmLTk1NzUtNmM2NjRjNTM5YzA1fHJlYWQtd3JpdGU="
       }
     }
