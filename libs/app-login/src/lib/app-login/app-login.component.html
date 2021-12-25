@@ -3,13 +3,16 @@
         [formGroup]="loginForm"
         (ngSubmit)="onSubmit()"
         novalidate>
+
+        <h2>Welcome to Kiki-Flows</h2>
+
         <mat-form-field appearance="outline">
             <mat-label> Email </mat-label>
             <input type="email"
                 formControlName="email"
                 matInput
                 placeholder="johnsmith@gmail.com" />
-            <mat-error></mat-error>
+            <mat-error *ngIf="email?.errors">Email must be valid</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="outline">
@@ -18,7 +21,7 @@
                 formControlName="password"
                 matInput
                 placeholder="Type ypur password here" />
-            <mat-error></mat-error>
+            <mat-error>Password must be between 4 and 20 chars</mat-error>
         </mat-form-field>
 
         <button mat-raised-button
