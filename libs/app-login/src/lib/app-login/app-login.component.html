@@ -1,0 +1,29 @@
+<main class="mt-40 w-full">
+    <form class="flex flex-col justify-center max-w-md h-full mr-auto ml-auto"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+        novalidate>
+        <mat-form-field appearance="outline">
+            <mat-label> Email </mat-label>
+            <input type="email"
+                formControlName="email"
+                matInput
+                placeholder="johnsmith@gmail.com" />
+            <mat-error></mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+            <mat-label> Password </mat-label>
+            <input type="password"
+                formControlName="password"
+                matInput
+                placeholder="Type ypur password here" />
+            <mat-error></mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button
+            [disabled]="!loginForm.valid"
+            color="primary"
+            type="submit">Let's Go</button>
+    </form>
+</main>
