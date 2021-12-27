@@ -1,31 +1,14 @@
-import { HttpCode } from '@nestjs/common';
+import { Public } from '@kiki-workspace/api-interfaces';
 import { Controller, Get } from '@nestjs/common';
-
-import { Message } from '@kiki-workspace/api-interfaces';
-
 import { AppService } from './app.service';
 
-@Controller('')
+@Controller()
 export class AppController {
-  constructor() {
-    console.log('1111111111111111111111111111111111');
+  constructor(private readonly appService: AppService) {}
 
-  }
-
-  // @Get('hello')
-  // getData(): Message {
-  //   // return this.appService.getData();
-  // }
-
+  @Public()
   @Get()
-  @HttpCode(200)
-  test(): Message {
-    return { message: 'OK' };
-  }
-
-  @Get('test')
-  @HttpCode(200)
-  healthCheck(): Message {
-    return { message: 'OK' };
+  getHello(): string {
+    return this.appService.getHello();
   }
 }
