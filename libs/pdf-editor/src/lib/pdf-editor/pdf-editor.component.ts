@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 
@@ -7,13 +7,12 @@ import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
   templateUrl: './pdf-editor.component.html',
   styleUrls: ['./pdf-editor.component.scss']
 })
-export class PdfEditorComponent implements OnInit {
+export class PdfEditorComponent  {
 
   constructor() {
     pdfDefaultOptions.assetsFolder = 'bleeding-edge';
    }
 
-  ngOnInit(): void {
-  }
+  
 
 }
