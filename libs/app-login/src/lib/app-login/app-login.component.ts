@@ -1,3 +1,6 @@
+import { login } from './../+state/auth/auth.actions';
+import { LoginCredentials } from './modals/login.modal';
+import { Store } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -7,6 +10,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { AppLoginService } from './services/app-login.service';
 
 @Component({
   selector: 'kiki-app-login',
@@ -19,10 +23,14 @@ export class AppLoginComponent implements OnInit {
    */
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private loginService: AppLoginService,
+    private store: Store
+  ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
 
@@ -34,7 +42,16 @@ export class AppLoginComponent implements OnInit {
     return this.loginForm.get('password');
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    const credentials: LoginCredentials = {
+      email: this.email?.value,
+      password: this.password?.value,
+    };
 
-  ngOnInit(): void {}
+    this.store.dispatch(login(credentials));
+  }
+
+  ngOnInit(): void {
+    console.log('mounted');
+  }
 }
