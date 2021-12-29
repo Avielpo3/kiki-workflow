@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { AppLoginComponent } from './app-login/app-login.component';
+import { AppAuthComponent } from './app-login/app-login.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,10 +12,10 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from './+state/auth/auth.reducer';
 import { AuthEffects } from './+state/auth/auth.effects';
 import { AuthFacade } from './+state/auth/auth.facade';
-import { AppLoginService } from './app-login/services/app-login.service';
+import { AppAuthService } from './app-login/services/app-login.service';
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', component: AppLoginComponent },
+  { path: '', pathMatch: 'full', component: AppAuthComponent },
 ];
 
 @NgModule({
@@ -30,7 +30,7 @@ const routes: Routes = [
     EffectsModule.forFeature([AuthEffects]),
     HttpClientModule,
   ],
-  declarations: [AppLoginComponent],
-  providers: [AuthFacade, AppLoginService],
+  declarations: [AppAuthComponent],
+  providers: [AuthFacade, AppAuthService],
 })
-export class AppLoginModule {}
+export class AppAuthModule {}

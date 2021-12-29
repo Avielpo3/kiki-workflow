@@ -12,7 +12,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { AppLoginModule } from '@kiki/login';
+import { AppAuthModule } from '@kiki-workspace/app-auth';
 
 const HttpInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
@@ -28,7 +28,7 @@ const HttpInterceptorProvider = {
     BrowserAnimationsModule,
     UiModule,
     FormsModule,
-    AppLoginModule,
+    AppAuthModule,
     PdfEditorModule,
     AppRoutingModule,
     StoreModule.forRoot(

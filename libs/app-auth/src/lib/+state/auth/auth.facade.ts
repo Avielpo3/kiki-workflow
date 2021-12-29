@@ -32,7 +32,7 @@ export class AuthFacade {
    * Login to server with username and password.
    * @param credentials submit login to server
    */
-  login(credentials: LoginCredentials){
+  login(credentials: LoginCredentials) {
     this.store.dispatch(AuthActions.login(credentials));
   }
 

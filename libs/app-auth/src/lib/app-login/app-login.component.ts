@@ -11,15 +11,15 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AppLoginService } from './services/app-login.service';
+import { AppAuthService } from './services/app-login.service';
 
 @Component({
   selector: 'kiki-app-login',
   templateUrl: './app-login.component.html',
   styleUrls: ['./app-login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppLoginComponent {
+export class AppAuthComponent {
   /**
    * The login form
    */

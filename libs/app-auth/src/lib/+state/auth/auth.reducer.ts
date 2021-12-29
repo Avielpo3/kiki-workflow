@@ -24,7 +24,7 @@ export const initialState: State = authAdapter.getInitialState({
   // set initial required properties
   loaded: false,
   isUserAuthenticated: false,
-  error: undefined
+  error: undefined,
 });
 
 const authReducer = createReducer(
@@ -39,10 +39,10 @@ const authReducer = createReducer(
     isUserAuthenticated: true,
     error: null,
   })),
-  on(AuthActions.loginFailure, (state, {message}) => ({
+  on(AuthActions.loginFailure, (state, { message }) => ({
     ...state,
     isUserAuthenticated: false,
-    error: message
+    error: message,
   }))
 );
 

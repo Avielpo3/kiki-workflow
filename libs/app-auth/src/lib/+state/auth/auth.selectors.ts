@@ -16,7 +16,6 @@ export const getAuthError = createSelector(
   (state: State) => state.error
 );
 
-
 export const getIsUserAuthenticated = createSelector(
   getAuthState,
   (state: State) => state.isUserAuthenticated

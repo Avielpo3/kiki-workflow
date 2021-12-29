@@ -8,7 +8,7 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AuthFacade } from '@kiki/login';
+import { AuthFacade } from '@kiki-workspace/app-auth';
 import { HttpServerError } from '@kiki/interfaces';
 
 @Injectable()

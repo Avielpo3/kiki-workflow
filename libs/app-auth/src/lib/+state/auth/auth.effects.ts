@@ -1,4 +1,4 @@
-import { AppLoginService } from './../../app-login/services/app-login.service';
+import { AppAuthService } from './../../app-login/services/app-login.service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { fetch } from '@nrwl/angular';
@@ -50,7 +50,6 @@ export class AuthEffects {
 
   constructor(
     private readonly actions$: Actions,
-    private readonly loginService: AppLoginService
+    private readonly loginService: AppAuthService
   ) {}
 }
-

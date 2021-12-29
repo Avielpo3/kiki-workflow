@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class AppLoginService {
+export class AppAuthService {
   constructor(private http: HttpClient) {}
 
   login(credentials: LoginCredentials): Observable<{ access_token: string }> {

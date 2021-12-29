@@ -6,7 +6,8 @@ const routes: Routes = [
   { path: 'home', component: AppComponent },
   {
     path: 'login',
-    loadChildren: () => import('@kiki/login').then((mod) => mod.AppLoginModule),
+    loadChildren: () =>
+      import('@kiki-workspace/app-auth').then((mod) => mod.AppAuthModule),
   },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
