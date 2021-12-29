@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UiModule } from '@kiki/ui';
-import { PdfEditorModule } from '@kiki/pdfkit';
+import { FeaturePdfDesginerModule } from '@kiki-workspace/feature-pdf-desginer';
 import { AppRoutingModule } from './app-routing.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -29,7 +29,7 @@ const HttpInterceptorProvider = {
     UiModule,
     FormsModule,
     AppAuthModule,
-    PdfEditorModule,
+    FeaturePdfDesginerModule,
     AppRoutingModule,
     StoreModule.forRoot(
       {},

@@ -166,6 +166,48 @@
       },
       "tags": ["interfaces"]
     },
+    "feature-pdf-desginer": {
+      "projectType": "library",
+      "root": "libs/feature-pdf-desginer",
+      "sourceRoot": "libs/feature-pdf-desginer/src",
+      "prefix": "kiki",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "outputs": ["dist/libs/feature-pdf-desginer"],
+          "options": {
+            "project": "libs/feature-pdf-desginer/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "libs/feature-pdf-desginer/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "libs/feature-pdf-desginer/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/feature-pdf-desginer"],
+          "options": {
+            "jestConfig": "libs/feature-pdf-desginer/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/feature-pdf-desginer/src/**/*.ts",
+              "libs/feature-pdf-desginer/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": ["pdf"]
+    },
     "kiki-app": {
       "projectType": "application",
       "root": "apps/kiki-app",
@@ -303,48 +345,6 @@
       },
       "tags": [],
       "implicitDependencies": ["kiki-app"]
-    },
-    "pdf-editor": {
-      "projectType": "library",
-      "root": "libs/pdf-editor",
-      "sourceRoot": "libs/pdf-editor/src",
-      "prefix": "kiki",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/angular:package",
-          "outputs": ["dist/libs/pdf-editor"],
-          "options": {
-            "project": "libs/pdf-editor/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "libs/pdf-editor/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "libs/pdf-editor/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/pdf-editor"],
-          "options": {
-            "jestConfig": "libs/pdf-editor/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/pdf-editor/src/**/*.ts",
-              "libs/pdf-editor/src/**/*.html"
-            ]
-          }
-        }
-      },
-      "tags": ["pdf"]
     },
     "ui": {
       "projectType": "library",
