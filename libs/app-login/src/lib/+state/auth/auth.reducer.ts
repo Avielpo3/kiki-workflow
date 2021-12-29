@@ -24,6 +24,7 @@ export const initialState: State = authAdapter.getInitialState({
   // set initial required properties
   loaded: false,
   isUserAuthenticated: false,
+  error: undefined
 });
 
 const authReducer = createReducer(
@@ -33,12 +34,12 @@ const authReducer = createReducer(
     authAdapter.setAll(auth, { ...state, loaded: true })
   ),
   on(AuthActions.loadAuthFailure, (state, { error }) => ({ ...state, error })),
-  on(AuthActions.loginSuccess, (state, token) => ({
+  on(AuthActions.loginSuccess, (state) => ({
     ...state,
     isUserAuthenticated: true,
     error: null,
   })),
-  on(AuthActions.loginFailure, (state, { message }) => ({
+  on(AuthActions.loginFailure, (state, {message}) => ({
     ...state,
     isUserAuthenticated: false,
     error: message

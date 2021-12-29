@@ -1,6 +1,3 @@
-import { AuthFacade } from './../../../../../../libs/app-login/src/lib/+state/auth/auth.facade';
-import { Store } from '@ngrx/store';
-import { HttpServerError } from './../../../../../../libs/app-interfaces/src/lib/errors/http-server';
 import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
@@ -11,10 +8,12 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
+import { AuthFacade } from '@kiki/login';
+import { HttpServerError } from '@kiki/interfaces';
 
 @Injectable()
 export class KikiHttpInterceptor implements HttpInterceptor {
-  constructor(private authFacade:AuthFacade) {
+  constructor(private authFacade: AuthFacade) {
     // Ctor
   }
 
@@ -55,31 +54,23 @@ export class KikiHttpInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        const customErr = this.getErrorMessage(error);
-        switch (customErr.httpStatusCode) {
+        const customErr = new HttpServerError(error, 'something_went_wrong');
+        switch (customErr.orgErr.status) {
           case HttpStatusCode.Unauthorized:
-            if(!customErr.url?.endsWith('/login')){
+            customErr.message = 'username_or_password_is_wrong';
+            if (!error.url?.endsWith('/login')) {
+              customErr.message = 'please_login_again';
               this.authFacade.UserUnauthorized401(customErr);
             }
             break;
           case HttpStatusCode.Forbidden:
+            customErr.message = 'something_went_wrong';
             this.authFacade.UserForbidden403(customErr);
-            break;
-          default:
-
             break;
         }
         //this.errorDialogService.openDialog(data);
         return throwError(() => customErr);
       })
-    );
-  }
-
-  private getErrorMessage(error: HttpErrorResponse): HttpServerError {
-    return new HttpServerError(
-      error.status as HttpStatusCode,
-      error.message,
-      error.url
     );
   }
 }

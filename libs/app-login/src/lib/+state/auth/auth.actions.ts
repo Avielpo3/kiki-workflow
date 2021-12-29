@@ -1,4 +1,4 @@
-import { HttpServerError } from './../../../../../app-interfaces/src/lib/errors/http-server';
+import { HttpServerError } from '@kiki/interfaces';
 import { LoginCredentials } from './../../app-login/modals/login.modal';
 import { createAction, props } from '@ngrx/store';
 import { AuthEntity } from './auth.models';
@@ -35,7 +35,7 @@ export const Unauthorized401 = createAction(
   props<HttpServerError>()
 );
 
-export const Forbbiden403 = createAction(
+export const Unauthorized403 = createAction(
   '[Auth/API] End point is Forbbiden 403',
   props<HttpServerError>()
 );

@@ -1,11 +1,11 @@
-import { HttpServerError } from './../../../../../app-interfaces/src/lib/errors/http-server';
-import { UnauthorizedException } from '@nestjs/common';
+import { HttpServerError } from '@kiki/interfaces';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { select, Store, Action } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 
 import * as AuthActions from './auth.actions';
-import * as AuthFeature from './auth.reducer';
 import * as AuthSelectors from './auth.selectors';
+import { LoginCredentials } from '../../app-login/modals/login.modal';
 
 @Injectable()
 export class AuthFacade {
@@ -16,6 +16,7 @@ export class AuthFacade {
   loaded$ = this.store.pipe(select(AuthSelectors.getAuthLoaded));
   allAuth$ = this.store.pipe(select(AuthSelectors.getAllAuth));
   selectedAuth$ = this.store.pipe(select(AuthSelectors.getSelected));
+  authError$ = this.store.pipe(select(AuthSelectors.getAuthError));
 
   constructor(private readonly store: Store) {}
 
@@ -27,11 +28,19 @@ export class AuthFacade {
     this.store.dispatch(AuthActions.init());
   }
 
+  /**
+   * Login to server with username and password.
+   * @param credentials submit login to server
+   */
+  login(credentials: LoginCredentials){
+    this.store.dispatch(AuthActions.login(credentials));
+  }
+
   UserUnauthorized401(error: HttpServerError): void {
     this.store.dispatch(AuthActions.Unauthorized401(error));
   }
 
   UserForbidden403(error: HttpServerError) {
-    this.store.dispatch(AuthActions.Forbbiden403(error));
+    // this.store.dispatch(AuthActions.Forbbiden403(error));
   }
 }

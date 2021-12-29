@@ -1,7 +1,8 @@
+import { AuthFacade } from './../+state/auth/auth.facade';
 import { login } from './../+state/auth/auth.actions';
 import { LoginCredentials } from './modals/login.modal';
 import { Store } from '@ngrx/store';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
   Form,
@@ -16,18 +17,15 @@ import { AppLoginService } from './services/app-login.service';
   selector: 'kiki-app-login',
   templateUrl: './app-login.component.html',
   styleUrls: ['./app-login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppLoginComponent implements OnInit {
+export class AppLoginComponent {
   /**
    * The login form
    */
   loginForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private loginService: AppLoginService,
-    private store: Store
-  ) {
+  constructor(private fb: FormBuilder, public authFacade: AuthFacade) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(3)]],
@@ -48,10 +46,6 @@ export class AppLoginComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.store.dispatch(login(credentials));
-  }
-
-  ngOnInit(): void {
-    console.log('mounted');
+    this.authFacade.login(credentials);
   }
 }
