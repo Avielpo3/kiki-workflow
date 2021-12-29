@@ -7,19 +7,23 @@ import { Injectable } from '@angular/core';
 export class AppLoginService {
   constructor(private http: HttpClient) {}
 
-  login(credentials: LoginCredentials): Observable<{ token: string }> {
+  login(credentials: LoginCredentials): Observable<{ access_token: string }> {
     const url = 'http://localhost:3333/api/auth/login';
 
     return this.http
-      .post<{ token: string }>(url, credentials, {
+      .post<{ access_token: string }>(url, credentials, {
         headers: new HttpHeaders({
           NoAuthorization: 'NoAuthorization',
         }),
       })
       .pipe(
         tap((response) => {
-          localStorage.setItem('token', response.token);
+          localStorage.setItem('token', response.access_token);
         })
       );
+  }
+
+  clearToken(): void {
+    localStorage.removeItem('token');
   }
 }

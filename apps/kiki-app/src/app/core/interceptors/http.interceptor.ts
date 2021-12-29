@@ -1,3 +1,7 @@
+import { AuthFacade } from './../../../../../../libs/app-login/src/lib/+state/auth/auth.facade';
+import { Store } from '@ngrx/store';
+import { HttpServerError } from './../../../../../../libs/app-interfaces/src/lib/errors/http-server';
+import { HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   HttpRequest,
@@ -10,7 +14,7 @@ import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable()
 export class KikiHttpInterceptor implements HttpInterceptor {
-  constructor() {
+  constructor(private authFacade:AuthFacade) {
     // Ctor
   }
 
@@ -51,17 +55,31 @@ export class KikiHttpInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        let data = {};
-        data = {
-          reason:
-            error && error.error && error.error.reason
-              ? error.error.reason
-              : '',
-          status: error.status,
-        };
+        const customErr = this.getErrorMessage(error);
+        switch (customErr.httpStatusCode) {
+          case HttpStatusCode.Unauthorized:
+            if(!customErr.url?.endsWith('/login')){
+              this.authFacade.UserUnauthorized401(customErr);
+            }
+            break;
+          case HttpStatusCode.Forbidden:
+            this.authFacade.UserForbidden403(customErr);
+            break;
+          default:
+
+            break;
+        }
         //this.errorDialogService.openDialog(data);
-        return throwError(() => new Error('aa'));
+        return throwError(() => customErr);
       })
+    );
+  }
+
+  private getErrorMessage(error: HttpErrorResponse): HttpServerError {
+    return new HttpServerError(
+      error.status as HttpStatusCode,
+      error.message,
+      error.url
     );
   }
 }

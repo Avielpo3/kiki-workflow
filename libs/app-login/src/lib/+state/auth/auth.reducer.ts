@@ -38,7 +38,11 @@ const authReducer = createReducer(
     isUserAuthenticated: true,
     error: null,
   })),
-  on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error }))
+  on(AuthActions.loginFailure, (state, { message }) => ({
+    ...state,
+    isUserAuthenticated: false,
+    error: message
+  }))
 );
 
 export function reducer(state: State | undefined, action: Action) {

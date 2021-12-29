@@ -31,14 +31,14 @@ export class AuthEffects {
         run: (credentials) => {
           return this.loginService.login(credentials).pipe(
             map((response) =>
-              AuthActions.loginSuccess({ token: response.token })
+              AuthActions.loginSuccess({ token: response.access_token })
             )
             // catchError((err) =>  of(new Error(err)))
           );
         },
         onError: (action, error) => {
-          console.error('Error', error);
-          return AuthActions.loginFailure({ error });
+          this.loginService.clearToken();
+          return AuthActions.loginFailure(error);
         },
       })
     )
@@ -53,3 +53,4 @@ export class AuthEffects {
     private readonly loginService: AppLoginService
   ) {}
 }
+

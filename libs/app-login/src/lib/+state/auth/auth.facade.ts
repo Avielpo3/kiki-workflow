@@ -1,3 +1,5 @@
+import { HttpServerError } from './../../../../../app-interfaces/src/lib/errors/http-server';
+import { UnauthorizedException } from '@nestjs/common';
 import { Injectable } from '@angular/core';
 import { select, Store, Action } from '@ngrx/store';
 
@@ -23,5 +25,13 @@ export class AuthFacade {
    */
   init() {
     this.store.dispatch(AuthActions.init());
+  }
+
+  UserUnauthorized401(error: HttpServerError): void {
+    this.store.dispatch(AuthActions.Unauthorized401(error));
+  }
+
+  UserForbidden403(error: HttpServerError) {
+    this.store.dispatch(AuthActions.Forbbiden403(error));
   }
 }

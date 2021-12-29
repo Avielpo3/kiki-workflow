@@ -114,6 +114,32 @@
       },
       "tags": []
     },
+    "app-interfaces": {
+      "projectType": "library",
+      "root": "libs/app-interfaces",
+      "sourceRoot": "libs/app-interfaces/src",
+      "prefix": "kiki-workspace",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/app-interfaces"],
+          "options": {
+            "jestConfig": "libs/app-interfaces/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/app-interfaces/src/**/*.ts",
+              "libs/app-interfaces/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": ["interfaces"]
+    },
     "app-login": {
       "projectType": "library",
       "root": "libs/app-login",

@@ -1,3 +1,4 @@
+import { HttpServerError } from './../../../../../app-interfaces/src/lib/errors/http-server';
 import { LoginCredentials } from './../../app-login/modals/login.modal';
 import { createAction, props } from '@ngrx/store';
 import { AuthEntity } from './auth.models';
@@ -26,5 +27,15 @@ export const loginSuccess = createAction(
 
 export const loginFailure = createAction(
   '[Auth/API] User Login Failured',
-  props<any>()
+  props<HttpServerError>()
+);
+
+export const Unauthorized401 = createAction(
+  '[Auth/API] User is Unauthorized 401',
+  props<HttpServerError>()
+);
+
+export const Forbbiden403 = createAction(
+  '[Auth/API] End point is Forbbiden 403',
+  props<HttpServerError>()
 );
