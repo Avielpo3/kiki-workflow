@@ -37,7 +37,7 @@ export class ApiUserService {
     const transform = (doc, ret: UserDocument) => ({ id: ret._id, ...ret });
     const foundUser = await this.userModel.findOne(queryFilter).exec();
     
-    return foundUser.toJSON<UserWithPassword>({transform});
+    return foundUser ? foundUser.toJSON<UserWithPassword>({transform}) : null;
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
