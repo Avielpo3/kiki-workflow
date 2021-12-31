@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 
 @Component({
@@ -9,6 +8,6 @@ import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 })
 export class FeaturePdfDesginerComponent {
   constructor() {
-    pdfDefaultOptions.assetsFolder = 'bleeding-edge';
+    //pdfDefaultOptions.assetsFolder = 'bleeding-edge';
   }
 }

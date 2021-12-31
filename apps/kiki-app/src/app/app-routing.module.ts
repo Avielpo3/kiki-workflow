@@ -9,7 +9,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('@kiki-workspace/app-auth').then((mod) => mod.AppAuthModule),
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  {
+    path: 'pdf-editor',
+    loadChildren: () =>
+      import('@kiki-workspace/feature-pdf-desginer').then((mod) => mod.FeaturePdfDesginerModule),
+  }
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
 ];
 
 @NgModule({

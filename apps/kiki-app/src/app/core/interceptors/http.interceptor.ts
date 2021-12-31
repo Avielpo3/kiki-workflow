@@ -8,12 +8,11 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { AuthFacade } from '@kiki-workspace/app-auth';
 import { HttpServerError } from '@kiki/interfaces';
 
 @Injectable()
 export class KikiHttpInterceptor implements HttpInterceptor {
-  constructor(private authFacade: AuthFacade) {
+  constructor() {
     // Ctor
   }
 
@@ -60,12 +59,12 @@ export class KikiHttpInterceptor implements HttpInterceptor {
             customErr.message = 'username_or_password_is_wrong';
             if (!error.url?.endsWith('/login')) {
               customErr.message = 'please_login_again';
-              this.authFacade.UserUnauthorized401(customErr);
+              //this.authFacade.UserUnauthorized401(customErr);
             }
             break;
           case HttpStatusCode.Forbidden:
             customErr.message = 'something_went_wrong';
-            this.authFacade.UserForbidden403(customErr);
+            //this.authFacade.UserForbidden403(customErr);
             break;
         }
         //this.errorDialogService.openDialog(data);

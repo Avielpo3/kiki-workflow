@@ -14,14 +14,14 @@ import { AuthEffects } from './+state/auth/auth.effects';
 import { AuthFacade } from './+state/auth/auth.facade';
 import { AppAuthService } from './app-login/services/app-auth.service';
 
-const routes: Routes = [
+const pdfRoutes: Routes = [
   { path: '', pathMatch: 'full', component: AppAuthComponent },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
+    RouterModule.forChild(pdfRoutes),
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
