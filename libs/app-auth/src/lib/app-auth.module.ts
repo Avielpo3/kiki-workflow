@@ -12,7 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from './+state/auth/auth.reducer';
 import { AuthEffects } from './+state/auth/auth.effects';
 import { AuthFacade } from './+state/auth/auth.facade';
-import { AppAuthService } from './app-login/services/app-login.service';
+import { AppAuthService } from './app-login/services/app-auth.service';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: AppAuthComponent },

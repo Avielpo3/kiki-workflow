@@ -1,5 +1,4 @@
 import { HttpServerError } from '@kiki/interfaces';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 
@@ -35,6 +34,7 @@ export class AuthFacade {
   login(credentials: LoginCredentials) {
     this.store.dispatch(AuthActions.login(credentials));
   }
+
 
   UserUnauthorized401(error: HttpServerError): void {
     this.store.dispatch(AuthActions.Unauthorized401(error));

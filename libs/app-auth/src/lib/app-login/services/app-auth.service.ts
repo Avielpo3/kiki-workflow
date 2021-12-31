@@ -1,5 +1,5 @@
-import { Observable, switchMap, tap } from 'rxjs';
-import { LoginCredentials } from './../modals/login.modal';
+import { Observable, tap } from 'rxjs';
+import { LoginCredentials } from '../modals/login.modal';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -7,7 +7,7 @@ import { Injectable } from '@angular/core';
 export class AppAuthService {
   constructor(private http: HttpClient) {}
 
-  login(credentials: LoginCredentials): Observable<{ access_token: string }> {
+  postLogin(credentials: LoginCredentials): Observable<{ access_token: string }> {
     const url = 'http://localhost:3333/api/auth/login';
 
     return this.http

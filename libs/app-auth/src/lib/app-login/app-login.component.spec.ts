@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppAuthComponent } from './app-login.component';
+import { AppAuthComponent } from './app-auth.component';
 
 describe('AppAuthComponent', () => {
   let component: AppAuthComponent;

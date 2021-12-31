@@ -8,6 +8,7 @@ describe('Auth Reducer', () => {
   const createAuthEntity = (id: string, name = ''): AuthEntity => ({
     id,
     name: name || `name-${id}`,
+    isUserAuthenticated : false
   });
 
   describe('valid Auth actions', () => {

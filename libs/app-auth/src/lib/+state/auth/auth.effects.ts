@@ -1,10 +1,11 @@
-import { AppAuthService } from './../../app-login/services/app-login.service';
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { fetch } from '@nrwl/angular';
+import { fetch, navigation } from '@nrwl/angular';
 
 import * as AuthActions from './auth.actions';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
+import { AppAuthService } from '../../app-login/services/app-auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -29,27 +30,34 @@ export class AuthEffects {
       ofType(AuthActions.login),
       fetch({
         run: (credentials) => {
-          return this.loginService.login(credentials).pipe(
-            map((response) =>
-              AuthActions.loginSuccess({ token: response.access_token })
-            )
-            // catchError((err) =>  of(new Error(err)))
-          );
+          return this.authService
+            .postLogin(credentials)
+            .pipe(
+              map((response) =>
+                AuthActions.loginSuccess({ token: response.access_token })
+              )
+            );
         },
         onError: (action, error) => {
-          this.loginService.clearToken();
+          this.authService.clearToken();
           return AuthActions.loginFailure(error);
         },
       })
     )
   );
 
-  // loginFailure$ = createEffect(() =>
-  //   this.actions$.pipe(ofType(AuthActions.loginFailure))
-  // );
+  loginSuccess$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(AuthActions.loginSuccess),
+        tap(() => this.router.navigate(['/home']))
+      ),
+    { dispatch: false }
+  );
 
   constructor(
     private readonly actions$: Actions,
-    private readonly loginService: AppAuthService
+    private readonly authService: AppAuthService,
+    private readonly router: Router
   ) {}
 }

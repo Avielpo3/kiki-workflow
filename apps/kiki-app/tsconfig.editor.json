@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "../../libs/app-interfaces/src/lib/state/router-state/reducer.ts"],
   "compilerOptions": {
     "types": ["jest", "node"]
   }

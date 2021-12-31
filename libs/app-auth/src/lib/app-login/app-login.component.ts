@@ -1,31 +1,33 @@
+import { getCurrentRouteState } from '@kiki/interfaces';
 import { AuthFacade } from './../+state/auth/auth.facade';
-import { login } from './../+state/auth/auth.actions';
 import { LoginCredentials } from './modals/login.modal';
-import { Store } from '@ngrx/store';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
-  Form,
   FormBuilder,
-  FormControl,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { AppAuthService } from './services/app-login.service';
+import { StoreRootState } from '@kiki/interfaces';
+import { select, Store } from '@ngrx/store';
 
 @Component({
-  selector: 'kiki-app-login',
+  selector: 'kiki-app-auth',
   templateUrl: './app-login.component.html',
   styleUrls: ['./app-login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppAuthComponent {
+export class AppAuthComponent implements OnInit {
   /**
    * The login form
    */
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, public authFacade: AuthFacade) {
+  constructor(
+    private fb: FormBuilder,
+    public authFacade: AuthFacade,
+    private store: Store<StoreRootState>
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(3)]],
@@ -48,4 +50,15 @@ export class AppAuthComponent {
 
     this.authFacade.login(credentials);
   }
+
+  ngOnInit(): void {
+    this.store
+      .pipe(select(getCurrentRouteState))
+      .subscribe((route: any) => {
+        console.log(route);
+        
+      });
+  }
 }
+
+

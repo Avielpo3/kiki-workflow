@@ -13,12 +13,17 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { AppAuthModule } from '@kiki-workspace/app-auth';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { CustomSerializer } from './core/serializers/router-state.serialzier';
+import { reducers } from '@kiki/interfaces';
 
 const HttpInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: KikiHttpInterceptor,
   multi: true,
 };
+
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +37,7 @@ const HttpInterceptorProvider = {
     FeaturePdfDesginerModule,
     AppRoutingModule,
     StoreModule.forRoot(
-      {},
+      reducers,
       {
         metaReducers: !environment.production ? [] : [],
         runtimeChecks: {
@@ -43,6 +48,9 @@ const HttpInterceptorProvider = {
     ),
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomSerializer,
+    }),
   ],
   providers: [HttpInterceptorProvider],
   bootstrap: [AppComponent],

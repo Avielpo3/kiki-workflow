@@ -1,6 +1,6 @@
 import { HttpServerError } from '@kiki/interfaces';
-import { LoginCredentials } from './../../app-login/modals/login.modal';
 import { createAction, props } from '@ngrx/store';
+import { LoginCredentials } from '../../app-login/modals/login.modal';
 import { AuthEntity } from './auth.models';
 
 export const init = createAction('[Auth Page] Init');
