@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FeaturePdfDesginerComponent } from './pdf-editor/pdf-editor.component';
-// import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 const pdfRoutes: Routes = [
   { path: '', component: FeaturePdfDesginerComponent },
@@ -11,7 +11,7 @@ const pdfRoutes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-   // NgxExtendedPdfViewerModule,
+    NgxExtendedPdfViewerModule,
     RouterModule.forChild(pdfRoutes),
   ],
   declarations: [FeaturePdfDesginerComponent],

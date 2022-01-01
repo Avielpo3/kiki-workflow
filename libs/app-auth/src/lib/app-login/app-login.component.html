@@ -38,7 +38,7 @@
       Let's Go
     </button>
 
-    <mat-error class="mt-4" *ngIf="authFacade.authError$ | async as errMsg">
+    <mat-error class="mt-4" *ngIf="coreFacade.authError$ | async as errMsg">
       {{ errMsg }}
     </mat-error>
   </form>

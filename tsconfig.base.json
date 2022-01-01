@@ -19,6 +19,7 @@
       "@kiki-workspace/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@kiki-workspace/api-user": ["libs/api-user/src/index.ts"],
       "@kiki-workspace/app-auth": ["libs/app-auth/src/index.ts"],
+      "@kiki-workspace/app-core": ["libs/app-core/src/index.ts"],
       "@kiki-workspace/feature-pdf-desginer": [
         "libs/feature-pdf-desginer/src/index.ts"
       ],

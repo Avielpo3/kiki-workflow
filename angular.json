@@ -140,6 +140,32 @@
       },
       "tags": ["page"]
     },
+    "app-core": {
+      "projectType": "library",
+      "root": "libs/app-core",
+      "sourceRoot": "libs/app-core/src",
+      "prefix": "kiki",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/app-core"],
+          "options": {
+            "jestConfig": "libs/app-core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/app-core/src/**/*.ts",
+              "libs/app-core/src/**/*.html"
+            ]
+          }
+        }
+      },
+      "tags": ["state"]
+    },
     "app-interfaces": {
       "projectType": "library",
       "root": "libs/app-interfaces",

@@ -1,13 +1,19 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@kiki-workspace/api-interfaces';
+import { CoreFacade } from '@kiki-workspace/app-core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'kiki-workspace-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  hello$ = this.http.get<Message>('/api/hello');
-  constructor(private http: HttpClient) {}
+export class AppComponent implements OnInit {
+  constructor(public coreFacade: CoreFacade) {}
+
+  isUserAuth = false;
+
+  ngOnInit(): void {
+    this.coreFacade.isUserAuth$.subscribe(
+      (isAuth) => (this.isUserAuth = isAuth)
+    );
+  }
 }

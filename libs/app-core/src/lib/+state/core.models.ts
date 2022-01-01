@@ -1,7 +1,7 @@
 /**
- * Interface for the 'Auth' data
+ * Interface for the 'Core' data
  */
-export interface AuthEntity {
+export interface CoreEntity {
   id: string | number; // Primary ID
   name: string;
   isUserAuthenticated: boolean;

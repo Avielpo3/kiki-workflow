@@ -8,5 +8,5 @@
     "types": []
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.test.ts"],
-  "include": ["**/*.ts", "../app-state-core/src/lib/services/app-auth.service.spec.ts"]
+  "include": ["**/*.ts"]
 }

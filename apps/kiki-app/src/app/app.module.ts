@@ -1,4 +1,8 @@
-import { KikiHttpInterceptor } from './core/interceptors/http.interceptor';
+import {
+  AppCoreModule,
+  CustomSerializer,
+  KikiHttpInterceptor,
+} from '@kiki-workspace/app-core';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -11,17 +15,32 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
-import { CustomSerializer } from './core/serializers/router-state.serialzier';
-import { reducers } from '@kiki/interfaces';
+import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
 
+/**
+ * Global HTTP interceptor
+ */
 const HttpInterceptorProvider = {
   provide: HTTP_INTERCEPTORS,
   useClass: KikiHttpInterceptor,
   multi: true,
 };
 
-
+/**
+ * Global store from NGRX
+ */
+const RootStoreModule = StoreModule.forRoot(
+  {
+    router: routerReducer,
+  },
+  {
+    metaReducers: !environment.production ? [] : [],
+    runtimeChecks: {
+      strictActionImmutability: true,
+      strictStateImmutability: true,
+    },
+  }
+);
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,18 +49,10 @@ const HttpInterceptorProvider = {
     HttpClientModule,
     BrowserAnimationsModule,
     UiModule,
+    AppCoreModule,
     FormsModule,
     AppRoutingModule,
-    StoreModule.forRoot(
-      reducers,
-      {
-        metaReducers: !environment.production ? [] : [],
-        runtimeChecks: {
-          strictActionImmutability: true,
-          strictStateImmutability: true,
-        },
-      }
-    ),
+    RootStoreModule,
     EffectsModule.forRoot([]),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     StoreRouterConnectingModule.forRoot({

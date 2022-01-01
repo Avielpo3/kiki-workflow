@@ -1,17 +1,16 @@
-import { HttpServerError } from '@kiki/interfaces';
+import { HttpServerError, LoginCredentials } from '@kiki/interfaces';
 import { createAction, props } from '@ngrx/store';
-import { LoginCredentials } from '../../app-login/modals/login.modal';
-import { AuthEntity } from './auth.models';
+import { CoreEntity } from './core.models';
 
-export const init = createAction('[Auth Page] Init');
+export const init = createAction('[Core Page] Init');
 
-export const loadAuthSuccess = createAction(
-  '[Auth/API] Load Auth Success',
-  props<{ auth: AuthEntity[] }>()
+export const loadCoreSuccess = createAction(
+  '[Core/API] Load Core Success',
+  props<{ core: CoreEntity[] }>()
 );
 
-export const loadAuthFailure = createAction(
-  '[Auth/API] Load Auth Failure',
+export const loadCoreFailure = createAction(
+  '[Core/API] Load Core Failure',
   props<{ error: any }>()
 );
 

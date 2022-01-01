@@ -6,32 +6,32 @@ import { NxModule } from '@nrwl/angular';
 import { hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 
-import * as AuthActions from './auth.actions';
-import { AuthEffects } from './auth.effects';
+import * as CoreActions from './core.actions';
+import { CoreEffects } from './core.effects';
 
-describe('AuthEffects', () => {
+describe('CoreEffects', () => {
   let actions: Observable<Action>;
-  let effects: AuthEffects;
+  let effects: CoreEffects;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [NxModule.forRoot()],
       providers: [
-        AuthEffects,
+        CoreEffects,
         provideMockActions(() => actions),
         provideMockStore(),
       ],
     });
 
-    effects = TestBed.inject(AuthEffects);
+    effects = TestBed.inject(CoreEffects);
   });
 
   describe('init$', () => {
     it('should work', () => {
-      actions = hot('-a-|', { a: AuthActions.init() });
+      actions = hot('-a-|', { a: CoreActions.init() });
 
       const expected = hot('-a-|', {
-        a: AuthActions.loadAuthSuccess({ auth: [] }),
+        a: CoreActions.loadCoreSuccess({ core: [] }),
       });
 
       expect(effects.init$).toBeObservable(expected);

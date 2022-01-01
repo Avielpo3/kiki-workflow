@@ -1,6 +1,4 @@
-import { getCurrentRouteState } from '@kiki/interfaces';
-import { AuthFacade } from './../+state/auth/auth.facade';
-import { LoginCredentials } from './modals/login.modal';
+import { LoginCredentials, selectCurrentRoute, selectRouteData, selectUrl } from '@kiki/interfaces';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import {
   AbstractControl,
@@ -8,8 +6,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { StoreRootState } from '@kiki/interfaces';
 import { select, Store } from '@ngrx/store';
+import { CoreFacade, StoreRootState } from '@kiki-workspace/app-core';
 
 @Component({
   selector: 'kiki-app-auth',
@@ -17,7 +15,7 @@ import { select, Store } from '@ngrx/store';
   styleUrls: ['./app-login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppAuthComponent implements OnInit {
+export class AppLoginComponent implements OnInit {
   /**
    * The login form
    */
@@ -25,7 +23,7 @@ export class AppAuthComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public authFacade: AuthFacade,
+    public coreFacade: CoreFacade,
     private store: Store<StoreRootState>
   ) {
     this.loginForm = this.fb.group({
@@ -48,17 +46,14 @@ export class AppAuthComponent implements OnInit {
       password: this.password?.value,
     };
 
-    this.authFacade.login(credentials);
+    if (this.loginForm.valid) {
+      this.coreFacade.login(credentials);
+    }
   }
 
   ngOnInit(): void {
-    this.store
-      .pipe(select(getCurrentRouteState))
-      .subscribe((route: any) => {
-        console.log(route);
-        
-      });
+    this.store.pipe(select(selectRouteData)).subscribe((route: any) => {
+      console.log(route);
+    });
   }
 }
-
-

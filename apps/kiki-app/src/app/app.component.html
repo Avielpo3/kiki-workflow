@@ -1,16 +1,12 @@
-<router-outlet></router-outlet>
-
-
-<!-- <kiki-header title="Hello">
+<kiki-header *ngIf="isUserAuth"
+             title="Hello">
 
 </kiki-header>
 
 <main>
-    <kiki-pdf-editor>
-        
-    </kiki-pdf-editor>
+    <router-outlet></router-outlet>
 </main>
 
-<kiki-footer>
+<kiki-footer *ngIf="isUserAuth">
 
-</kiki-footer> -->
+</kiki-footer>

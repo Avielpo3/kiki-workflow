@@ -5,34 +5,33 @@ import { StoreModule, Store } from '@ngrx/store';
 import { NxModule } from '@nrwl/angular';
 import { readFirst } from '@nrwl/angular/testing';
 
-import * as AuthActions from './auth.actions';
-import { AuthEffects } from './auth.effects';
-import { AuthFacade } from './auth.facade';
-import { AuthEntity } from './auth.models';
-import { AUTH_FEATURE_KEY, State, initialState, reducer } from './auth.reducer';
-import * as AuthSelectors from './auth.selectors';
+import * as CoreActions from './core.actions';
+import { CoreEffects } from './core.effects';
+import { CoreFacade } from './core.facade';
+import { CoreEntity } from './core.models';
+import { CORE_FEATURE_KEY, CoreState, reducer } from './core.reducer';
 
 interface TestSchema {
-  auth: State;
+  core: CoreState;
 }
 
-describe('AuthFacade', () => {
-  let facade: AuthFacade;
+describe('CoreFacade', () => {
+  let facade: CoreFacade;
   let store: Store<TestSchema>;
-  const createAuthEntity = (id: string, name = ''): AuthEntity => ({
+  const createCoreEntity = (id: string, name = ''): CoreEntity => ({
     id,
     name: name || `name-${id}`,
-    isUserAuthenticated: false,
+    isUserAuthenticated: false
   });
 
   describe('used in NgModule', () => {
     beforeEach(() => {
       @NgModule({
         imports: [
-          StoreModule.forFeature(AUTH_FEATURE_KEY, reducer),
-          EffectsModule.forFeature([AuthEffects]),
+          StoreModule.forFeature(CORE_FEATURE_KEY, reducer),
+          EffectsModule.forFeature([CoreEffects]),
         ],
-        providers: [AuthFacade],
+        providers: [CoreFacade],
       })
       class CustomFeatureModule {}
 
@@ -48,14 +47,14 @@ describe('AuthFacade', () => {
       TestBed.configureTestingModule({ imports: [RootModule] });
 
       store = TestBed.inject(Store);
-      facade = TestBed.inject(AuthFacade);
+      facade = TestBed.inject(CoreFacade);
     });
 
     /**
      * The initially generated facade::loadAll() returns empty array
      */
     it('loadAll() should return empty list with loaded == true', async () => {
-      let list = await readFirst(facade.allAuth$);
+      let list = await readFirst(facade.allCore$);
       let isLoaded = await readFirst(facade.loaded$);
 
       expect(list.length).toBe(0);
@@ -63,7 +62,7 @@ describe('AuthFacade', () => {
 
       facade.init();
 
-      list = await readFirst(facade.allAuth$);
+      list = await readFirst(facade.allCore$);
       isLoaded = await readFirst(facade.loaded$);
 
       expect(list.length).toBe(0);
@@ -71,22 +70,22 @@ describe('AuthFacade', () => {
     });
 
     /**
-     * Use `loadAuthSuccess` to manually update list
+     * Use `loadCoreSuccess` to manually update list
      */
-    it('allAuth$ should return the loaded list; and loaded flag == true', async () => {
-      let list = await readFirst(facade.allAuth$);
+    it('allCore$ should return the loaded list; and loaded flag == true', async () => {
+      let list = await readFirst(facade.allCore$);
       let isLoaded = await readFirst(facade.loaded$);
 
       expect(list.length).toBe(0);
       expect(isLoaded).toBe(false);
 
       store.dispatch(
-        AuthActions.loadAuthSuccess({
-          auth: [createAuthEntity('AAA'), createAuthEntity('BBB')],
+        CoreActions.loadCoreSuccess({
+          core: [createCoreEntity('AAA'), createCoreEntity('BBB')],
         })
       );
 
-      list = await readFirst(facade.allAuth$);
+      list = await readFirst(facade.allCore$);
       isLoaded = await readFirst(facade.loaded$);
 
       expect(list.length).toBe(2);
