@@ -1,5 +1,43 @@
-<ngx-extended-pdf-viewer [src]="'./assets/example.pdf'"
-                         [useBrowserLocale]="true"
-                         height="100%"
-                         [(formData)]="formData">
-</ngx-extended-pdf-viewer>
+<div class="flex flex-row w-full h-full">
+
+  <kiki-pdf-field-list class="w-56">
+
+    <div kiki-header>Select Field</div>
+
+    <kiki-pdf-field-list-item *ngFor="let field of fieldService.fieldList"
+                              (click)="onFieldClick(field)">
+      <span>{{field.name | uppercase}}</span>
+      <mat-icon>{{field.icon}}</mat-icon>
+    </kiki-pdf-field-list-item>
+  </kiki-pdf-field-list>
+
+  <div class="drag-container h-full w-full flex">
+    <!-- <div class="h-20 w-20 bg-gray-500 z-50 dragable relative" cdkDragBoundary=".drag-container"
+         cdkDrag>
+    </div> -->
+
+    <pdf-viewer [src]="'./assets/example.pdf'"
+                [(page)]="page"
+                [show-all]="false"
+                [original-size]="true"
+                [fit-to-page]="false"
+                [render-text]="true"
+                (text-layer-rendered)="textLayerRendered($event)"
+                style="width: 100%;height: 100%;"
+                [original-size]="false">
+    </pdf-viewer>
+
+  </div>
+
+
+</div>
+
+<!-- <ng-template #withoutSidebar>
+  <div id="sidebarContainer"
+       style="top:-1px">
+    <kiki-pdf-field-list class="w-full h-full"></kiki-pdf-field-list>
+    <pdf-sidebar-content></pdf-sidebar-content>
+    <div id="sidebarResizer"
+         class="hidden"></div>
+  </div>
+</ng-template> -->

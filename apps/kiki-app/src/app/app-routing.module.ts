@@ -1,9 +1,9 @@
-import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { KikiHomeComponent } from './kiki-home/kiki-home.component';
 
 const routes: Routes = [
-  { path: 'home', component: AppComponent },
+  { path: 'home', component: KikiHomeComponent },
   {
     path: 'login',
     loadChildren: () =>

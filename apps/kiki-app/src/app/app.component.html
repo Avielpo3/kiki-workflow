@@ -1,10 +1,10 @@
-<kiki-header *ngIf="isUserAuth"
-             title="Hello">
+<kiki-header *ngIf="isUserAuth">
+    <p>Testti</p>
 
 </kiki-header>
 
-<main>
-    <router-outlet></router-outlet>
+<main class="h-full">
+    <router-outlet class="h-full"></router-outlet>
 </main>
 
 <kiki-footer *ngIf="isUserAuth">

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
 import {
-  NgxExtendedPdfViewerService,
-  pdfDefaultOptions,
-} from 'ngx-extended-pdf-viewer';
+  KikiPdfFieldListService,
+  PdfFieldListItem,
+} from './../pdf-field-list.service';
+import { Component, Input } from '@angular/core';
+import { DragDrop } from '@angular/cdk/drag-drop';
+import { PDFDocumentProxy } from 'ng2-pdf-viewer';
 
 @Component({
   selector: 'kiki-pdf-editor',
@@ -10,41 +12,46 @@ import {
   styleUrls: ['./pdf-editor.component.scss'],
 })
 export class FeaturePdfDesginerComponent {
-  constructor(private ngxService: NgxExtendedPdfViewerService) {
-    pdfDefaultOptions.assetsFolder = 'bleeding-edge';
-  }
+  /**
+   * Indicates if the filed list is visible
+   */
+  @Input() isSidebarVisible = false;
 
+  /**
+   * Bound to the current page index.
+   */
+  @Input() page = 1;
 
-  public firstName = 'Jane';
+  constructor(
+    public fieldService: KikiPdfFieldListService,
+    public dragDropService: DragDrop
+  ) {}
 
-  public lastName = 'Doe';
-  public country = 'Spain';
-  public jobExperience = '6';
-  public typeScript = true;
+  textLayerRendered(e: Event): void {
+    const div = document.createElement('div');
+    div.className = 'h-20 w-20 bg-gray-500 z-50 drag';
+    div.setAttribute('cdkDrag', '');
+    div.setAttribute('cdkDragBoundary', '.page');
+    div.style.display = 'flex';
+    div.style.position = 'absolute';
+    const innerEl = document
+      .getElementsByClassName('pdfViewer')[0]
+      .getElementsByClassName('page')[0] as HTMLElement;
 
-  public get formData(): { [fieldName: string]: string | number | boolean } {
-    return {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      yearsOfExperience: this.jobExperience,
-      typeScript: this.typeScript,
-      country: this.country,
-    };
-  }
+    innerEl.appendChild(div);
+    // const el = document.getElementsByClassName('fragging')[0] as HTMLElement;
 
-  public set formData(data: {
-    [fieldName: string]: string | number | boolean | string[];
-  }) {
-    this.firstName = data.firstName as string;
-    this.lastName = data.lastName as string;
-    this.jobExperience = data.yearsOfExperience as string;
-    this.country = data.country as string;
-    this.typeScript = data.typeScript === 'true' || data.typeScript === true;
-  }
+    const drag = this.dragDropService.createDrag(div);
+    drag.withBoundaryElement(innerEl);
 
-  async test() {
+    const dropList = this.dragDropService.createDropList(innerEl);
     
-
+    //dropList.withItems([drag])
+    // drag.withParent(dropZone)
+    //drag.withBoundaryElement(dropZone)
   }
 
+  onFieldClick(field: PdfFieldListItem): void {
+    console.log(field.name);
+  }
 }

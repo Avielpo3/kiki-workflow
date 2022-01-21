@@ -16,6 +16,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule, routerReducer } from '@ngrx/router-store';
+import { KikiHomeComponent } from './kiki-home/kiki-home.component';
 
 /**
  * Global HTTP interceptor
@@ -43,7 +44,7 @@ const RootStoreModule = StoreModule.forRoot(
 );
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, KikiHomeComponent],
   imports: [
     BrowserModule,
     HttpClientModule,
