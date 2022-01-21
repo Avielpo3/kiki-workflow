@@ -4,7 +4,7 @@
 
     <div kiki-header>Select Field</div>
 
-    <kiki-pdf-field-list-item *ngFor="let field of fieldService.fieldList"
+    <kiki-pdf-field-list-item *ngFor="let field of fieldService.menuFieldList"
                               (click)="onFieldClick(field)">
       <span>{{field.name | uppercase}}</span>
       <mat-icon>{{field.icon}}</mat-icon>
@@ -18,12 +18,11 @@
 
     <pdf-viewer [src]="'./assets/example.pdf'"
                 [(page)]="page"
-                [show-all]="false"
-                [original-size]="true"
+                [original-size]="false"
                 [fit-to-page]="false"
                 [render-text]="true"
-                (text-layer-rendered)="textLayerRendered($event)"
-                style="width: 100%;height: 100%;"
+                (page-rendered)="pageRendered($event)"
+                style="width: 595pt;height: 842pt;"
                 [original-size]="false">
     </pdf-viewer>
 

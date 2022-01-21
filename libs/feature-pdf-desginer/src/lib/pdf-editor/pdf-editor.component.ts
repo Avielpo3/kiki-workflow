@@ -27,16 +27,24 @@ export class FeaturePdfDesginerComponent {
     public dragDropService: DragDrop
   ) {}
 
-  textLayerRendered(e: Event): void {
+  pageRendered(e: any) {
+    const pageEl: HTMLDivElement = e.source.div;
+    const index: number = e.pageNumber;
+
+    this.add(pageEl);
+  }
+
+  add(innerEl: HTMLElement): void {
     const div = document.createElement('div');
-    div.className = 'h-20 w-20 bg-gray-500 z-50 drag';
+    div.className =
+      'h-10 w-20 bg-green-500 z-50 border-gray-700 opacity-60 border ring-offset-2 focus:ring-2 hover:opacity-40 cursor-pointer';
     div.setAttribute('cdkDrag', '');
     div.setAttribute('cdkDragBoundary', '.page');
+    div.setAttribute('tabindex', '1');
     div.style.display = 'flex';
     div.style.position = 'absolute';
-    const innerEl = document
-      .getElementsByClassName('pdfViewer')[0]
-      .getElementsByClassName('page')[0] as HTMLElement;
+    div.style.top = '0';
+    div.style.left = '0';
 
     innerEl.appendChild(div);
     // const el = document.getElementsByClassName('fragging')[0] as HTMLElement;
@@ -45,7 +53,7 @@ export class FeaturePdfDesginerComponent {
     drag.withBoundaryElement(innerEl);
 
     const dropList = this.dragDropService.createDropList(innerEl);
-    
+
     //dropList.withItems([drag])
     // drag.withParent(dropZone)
     //drag.withBoundaryElement(dropZone)

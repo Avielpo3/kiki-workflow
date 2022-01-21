@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@angular-builders/custom-webpack": "^13.0.0",
-    "@angular-devkit/build-angular": "~13.0.0",
+    "@angular-devkit/build-angular": "^13.1.4",
     "@angular-eslint/eslint-plugin": "~13.0.1",
     "@angular-eslint/eslint-plugin-template": "~13.0.1",
     "@angular-eslint/template-parser": "~13.0.1",
@@ -85,7 +85,7 @@
     "postcss": "^8.3.9",
     "postcss-import": "^14.0.2",
     "postcss-loader": "^6.2.1",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^7.2.3",
     "postcss-scss": "^4.0.2",
     "postcss-url": "^10.1.1",
     "prettier": "^2.3.1",
